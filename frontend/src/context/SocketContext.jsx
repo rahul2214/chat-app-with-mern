@@ -4,6 +4,7 @@ import io from "socket.io-client";
 
 const SocketContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSocketContext = () => {
     return useContext(SocketContext);
 };
@@ -15,7 +16,7 @@ export const SocketContextProvider = ({ children }) => {
 
     useEffect(() => {
         if (authUser) {
-            const socket = io("https://chat-app-with-mern-mgu3.onrender.com/", {
+            const socket = io("http://localhost:8000", {
                 query: {
                     userId: authUser._id,
                 },
@@ -35,7 +36,7 @@ export const SocketContextProvider = ({ children }) => {
                 setSocket(null);
             }
         }
-    }, [authUser]);
+    }, [authUser, socket]);
 
     return <SocketContext.Provider value={{ socket, onlineUsers }}>{children}</SocketContext.Provider>;
 };
